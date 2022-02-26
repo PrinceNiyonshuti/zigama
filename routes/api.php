@@ -34,7 +34,7 @@ Route::prefix('admin')->group(function () {
         Route::post('login', [AdminController::class, 'login']);
     });
 
-    Route::prefix('admin')->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('logout', [AdminController::class, 'logout']);
     });
 });
