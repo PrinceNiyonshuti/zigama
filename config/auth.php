@@ -106,7 +106,7 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'admin' => [
+        'admins' => [
             'driver' => 'eloquent ',
             'model' => App\Models\Admin::class,
         ],

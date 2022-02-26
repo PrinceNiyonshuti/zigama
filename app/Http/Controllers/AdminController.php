@@ -4,82 +4,70 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $attributes = array(
+            'name' => 'required|unique:admin,name',
+            'phone' => 'required|numeric|unique:admin,phone',
+            'email' => 'required|email|unique:admin,email',
+            'password' => 'required|min:7|max:255'
+        );
+
+        $validator = Validator::make($request->all(), $attributes);
+        if ($validator->fails()) {
+            return $validator->errors();
+        } else {
+            $account = new Admin;
+            $account->reference = str::random(10);
+            $account->name = $request->name;
+            $account->email = $request->email;
+            $account->password = bcrypt($request->password);
+            $newAccount = $account->save();
+
+            if ($newAccount) {
+                $token = $account->createToken('my-app-token')->plainTextToken;
+                $response = [
+                    'message' => 'New Admin Account created',
+                    'user' => $account,
+                    'token' => $token
+                ];
+                return response($response, 201);
+            } else {
+                return response([
+                    'message' => ['Something went wrong  !']
+                ], 404);
+            }
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Admin $admin)
+    public function login(Request $request)
     {
-        //
+        $user = Admin::where('email', $request->email)->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response([
+                'message' => ['These credentials do not match our records.']
+            ], 401);
+        }
+        $token = $user->createToken('my-app-token')->plainTextToken;
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+        return response($response, 201);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Admin $admin)
+    public function logout(Request $request)
     {
-        //
-    }
+        auth()->user()->tokens()->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Admin $admin)
-    {
-        //
+        return [
+            'message' => 'Logged out'
+        ];
     }
 }
