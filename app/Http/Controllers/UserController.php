@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
+
     public function store(Request $request)
     {
         $attributes = array(
-            'name' => 'required|unique:admins,name',
-            'phone' => 'required|numeric|unique:admins,phone',
-            'email' => 'required|email|unique:admins,email',
+            'name' => 'required|unique:users,name',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:7|max:255'
         );
 
@@ -23,9 +23,9 @@ class AdminController extends Controller
         if ($validator->fails()) {
             return $validator->errors();
         } else {
-            $account = new Admin;
+            $account = new User;
+            $account->reference = str::random(10);
             $account->name = $request->name;
-            $account->phone = $request->phone;
             $account->email = $request->email;
             $account->password = bcrypt($request->password);
             $newAccount = $account->save();
@@ -33,7 +33,7 @@ class AdminController extends Controller
             if ($newAccount) {
                 $token = $account->createToken('my-app-token')->plainTextToken;
                 $response = [
-                    'message' => 'New Admin Account created',
+                    'message' => 'New Account created',
                     'user' => $account,
                     'token' => $token
                 ];
@@ -48,7 +48,7 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
-        $user = Admin::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
                 'message' => ['These credentials do not match our records.']

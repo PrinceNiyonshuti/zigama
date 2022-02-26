@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique();
             $table->string('companyName');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
