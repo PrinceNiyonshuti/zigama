@@ -13,9 +13,9 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $attributes = array(
-            'name' => 'required|unique:admin,name',
-            'phone' => 'required|numeric|unique:admin,phone',
-            'email' => 'required|email|unique:admin,email',
+            'name' => 'required|unique:admins,name',
+            'phone' => 'required|numeric|unique:admins,phone',
+            'email' => 'required|email|unique:admins,email',
             'password' => 'required|min:7|max:255'
         );
 
@@ -24,8 +24,8 @@ class AdminController extends Controller
             return $validator->errors();
         } else {
             $account = new Admin;
-            $account->reference = str::random(10);
             $account->name = $request->name;
+            $account->phone = $request->phone;
             $account->email = $request->email;
             $account->password = bcrypt($request->password);
             $newAccount = $account->save();
