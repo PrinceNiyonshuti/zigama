@@ -25,3 +25,15 @@ Route::prefix('user')->group(function () {
         Route::post('logout', [UserController::class, 'logout']);
     });
 });
+
+
+Route::prefix('admin')->group(function () {
+    Route::middleware(['guest'])->group(function () {
+        Route::post('create', [AdminController::class, 'store']);
+        Route::post('login', [AdminController::class, 'login']);
+    });
+
+    Route::prefix('admin')->group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('logout', [AdminController::class, 'logout']);
+    });
+});
