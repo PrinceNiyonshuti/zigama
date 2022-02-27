@@ -6,6 +6,7 @@ use App\Models\Bank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class BankController extends Controller
 {
@@ -79,16 +80,17 @@ class BankController extends Controller
 
     public function update(Request $request, Bank $bank)
     {
+
         $bank = $bank::find($request->id);
         if ($bank) {
             $attributes = array(
-                "bankName" => "required|min:3|unique:banks,bankName",
+                "bankName" => "required|min:3|unique:banks,bankName,{$bank->id}",
             );
             $validator = Validator::make($request->all(), $attributes);
             if ($validator->fails()) {
                 return $validator->errors();
             } else {
-                $bank->typeName = $request->typeName;
+                $bank->bankName = $request->bankName;
                 $bank->save();
                 if ($bank) {
                     $response = [
@@ -102,6 +104,10 @@ class BankController extends Controller
                     ], 404);
                 }
             }
+        } else {
+            return response([
+                'message' => 'No Bank Found'
+            ], 404);
         }
     }
 
