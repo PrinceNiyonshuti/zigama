@@ -55,9 +55,19 @@ class BankController extends Controller
         }
     }
 
-    public function show(Bank $bank)
+    public function show(Request $request, Bank $bank)
     {
-        //
+        $bank = $bank::find($request->id);
+        if ($bank) {
+            $response = [
+                'bank' => $bank,
+            ];
+            return response($response, 201);
+        } else {
+            return response([
+                'message' => 'No Bank Found'
+            ], 404);
+        }
     }
 
 
@@ -69,12 +79,52 @@ class BankController extends Controller
 
     public function update(Request $request, Bank $bank)
     {
-        //
+        $bank = $bank::find($request->id);
+        if ($bank) {
+            $attributes = array(
+                "bankName" => "required|min:3|unique:banks,bankName",
+            );
+            $validator = Validator::make($request->all(), $attributes);
+            if ($validator->fails()) {
+                return $validator->errors();
+            } else {
+                $bank->typeName = $request->typeName;
+                $bank->save();
+                if ($bank) {
+                    $response = [
+                        'message' => 'Bank Updated',
+                        'role' => $bank
+                    ];
+                    return response($response, 201);
+                } else {
+                    return response([
+                        'message' => 'These operation has failed'
+                    ], 404);
+                }
+            }
+        }
     }
 
 
-    public function destroy(Bank $bank)
+    public function destroy(Request $request, Bank $bank)
     {
-        //
+        $bank = $bank::find($request->id);
+        if ($bank) {
+            $Data = $bank->delete();
+            if ($Data) {
+                $response = [
+                    'message' => 'Bank Deleted'
+                ];
+                return response($response, 201);
+            } else {
+                return response([
+                    'message' => 'These operation has failed'
+                ], 404);
+            }
+        } else {
+            return response([
+                'message' => 'No Bank Found'
+            ], 404);
+        }
     }
 }

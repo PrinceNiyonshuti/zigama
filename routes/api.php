@@ -48,6 +48,7 @@ Route::prefix('admin')->group(function () {
 // Admin - Bank Actions
 Route::prefix('bank')->middleware(['auth:sanctum'])->group(function () {
     Route::get('', [BankController::class, 'index']);
+    Route::post('/search', [BankController::class, 'show']);
     Route::post('/store', [BankController::class, 'store']);
     Route::put('/update', [BankController::class, 'update']);
     Route::delete('delete', [BankController::class, 'destroy']);
