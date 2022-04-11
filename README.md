@@ -2,7 +2,8 @@
 
 ## About - Zigama
 
-Banking backend app builded using laravel and sanctum 
+Banking backend app builded using laravel and sanctum for savings ,
+while you can withdraw and deposit 
 
 ## Documentation
 
