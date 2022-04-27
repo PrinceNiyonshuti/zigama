@@ -1,4 +1,4 @@
-## About - Zigama
+## About - Zigama Banking system
 
 Banking system backend app builded using laravel and sanctum for depositing , withdrawing and being able to transfer money to another account.
 
