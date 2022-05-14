@@ -4,7 +4,7 @@ Banking system backend app builded using laravel and sanctum for depositing , wi
 
 ### Frontend 
 
-Frontend will be implemented using VueJS Inertia
+Frontend implemented using VueJS Inertia
 
 ## Documentation
 
