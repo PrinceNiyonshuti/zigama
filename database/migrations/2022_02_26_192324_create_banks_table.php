@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->string('reference')->unique();
-            $table->string('bankName');
+            $table->string('bankName')->unique();
+            $table->string('details')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
