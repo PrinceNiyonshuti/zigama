@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('bank_id');
+            $table->foreignId('bank_account_type_id');
+            $table->foreignId('user_id');
+            $table->string('status');
+            $table->double('balance')->default(0.00);
             $table->timestamps();
         });
     }
