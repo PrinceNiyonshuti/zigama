@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Bank;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class BankAccountTypeFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'bank_id' => Bank::all()->random()->id,
+            'typeName' => $this->faker->name(),
         ];
     }
 }
