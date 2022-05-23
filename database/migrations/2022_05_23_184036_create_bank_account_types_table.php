@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('bank_account_types', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('bank_id');
+            $table->string('typeName');
             $table->timestamps();
         });
     }
