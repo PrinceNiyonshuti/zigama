@@ -17,6 +17,7 @@ before starting to run the project
 
 ### after run these script
 
+    Run npm install
     Run composer install
     Run cp .env.example .env or copy .env.example .env
     Run php artisan key:generate
