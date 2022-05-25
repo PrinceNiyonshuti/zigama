@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Bank;
 use App\Models\User;
+use App\Models\TransactionType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,10 @@ class TransactionFactory extends Factory
     {
         return [
             //
+            'transaction_type_id' => TransactionType::all()->random()->id,
+            'bank_id' => Bank::all()->random()->id,
+            'user_id' => User::all()->random()->id,
+            'amount' => '200.00',
         ];
     }
 }
