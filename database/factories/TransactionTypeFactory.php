@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Bank;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,8 @@ class TransactionTypeFactory extends Factory
     {
         return [
             //
+            'bank_id' => Bank::all()->random()->id,
+            'type_name' => $this->faker->name(),
         ];
     }
 }
