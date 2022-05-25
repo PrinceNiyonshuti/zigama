@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\BankAccountType::factory(10)->create();
         \App\Models\BankAccount::factory(10)->create();
         \App\Models\Client::factory(10)->create();
+        \App\Models\TransactionType::factory(10)->create();
     }
 }
