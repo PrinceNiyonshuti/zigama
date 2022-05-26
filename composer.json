@@ -1,8 +1,11 @@
 {
     "name": "Zigama",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "Banking system , builded builded on the top of PHP and Laravel framework",
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
