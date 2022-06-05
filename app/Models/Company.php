@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Company extends Authenticatable
 {
-    use HasApiTokens, HasFactory;
+    use HasApiTokens,HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
