@@ -16,7 +16,7 @@ before starting to run the project
 -   create your .env file
 -   create your database
 
-### after run these script
+## after run these script
 
     Run npm install
     Run composer install
