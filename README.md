@@ -11,7 +11,7 @@ Frontend implemented using VueJS Inertia
 
 before starting to run the project
 
-### Requirements
+## Requirements
 
 -   create your .env file
 -   create your database
