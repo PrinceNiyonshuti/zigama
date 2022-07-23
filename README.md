@@ -9,7 +9,7 @@ Frontend implemented using VueJS Inertia
 
 ## Documentation
 
-before starting to run the project
+before starting please read the documentation and make sure that you have all the dependeencies
 
 ## Requirements
 
